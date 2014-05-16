@@ -53,8 +53,28 @@ function isValidNumber(input) {
     /* trusting in JavaScript Or short circuit here! */
     if(input === undefined || input === null || input.trim().length === 0 ||
         isNaN(input) || input <= 0) {
-        alert("Please enter a valid positive number for 'Amount'");
+        showErrorDialog("Please enter a valid positive number for 'Amount'", "Invalid Amount");
         return false;
     }
     return true;
+}
+
+function showErrorDialog(message, title) {
+    BootstrapDialog.show({
+        message: message,
+        title: title,
+        type: BootstrapDialog.TYPE_DANGER,
+        buttons: [
+            {
+                id: 'btn-ok',
+                icon: 'glyphicon glyphicon-check',
+                label: 'OK',
+                cssClass: 'btn-primary',
+                autospin: false,
+                action: function (dialogRef) {
+                    dialogRef.close();
+                }
+            }
+        ]
+    });
 }
