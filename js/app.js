@@ -7,6 +7,7 @@ var currencies;
 
 $(document).ready(function() {
     buildCombos();
+    setFocusToAmount();
 
     $("#convertForm").submit(function(event){
         event.preventDefault();
@@ -30,6 +31,8 @@ $(document).ready(function() {
             var result = amount + " " + from + " = " + conversion + " " + to;
             $("#conversion").text(result);
         },"jsonp");
+
+        setFocusToAmount();
     });
 
 });
@@ -77,4 +80,8 @@ function showErrorDialog(message, title) {
             }
         ]
     });
+}
+
+function setFocusToAmount() {
+    $("#inputAmount").focus();
 }
