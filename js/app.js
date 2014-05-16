@@ -7,11 +7,12 @@ var currencies;
 
 $(document).ready(function() {
     buildCombos();
-    initialize();
 
     $("#convertForm").submit(function(event){
         event.preventDefault();
-
+        if(!isValidNumber($("#inputAmount").val())){
+            return;
+        }
 
         app_id="c3d8f8a350fb424e9571714ffdfab367";
         uri=encodeURI("http://openexchangerates.org/latest.json?app_id="+app_id);
@@ -33,12 +34,6 @@ $(document).ready(function() {
 
 });
 
-function initialize() {
-    $("#inputAmount").val(1000);
-    $("#inputFromCurrency").val("GBP");
-    $("#inputToCurrency").val("NZD");
-}
-
 function buildCombos()
 {
     $.getJSON ("http://openexchangerates.org/api/currencies.json",
@@ -52,5 +47,14 @@ function buildCombos()
             $("#inputToCurrency").html(html);
         }
     );
+}
 
-};
+function isValidNumber(input) {
+    /* trusting in JavaScript Or short circuit here! */
+    if(input === undefined || input === null || input.trim().length === 0 ||
+        isNaN(input) || input <= 0) {
+        alert("Please enter a valid positive number for 'Amount'");
+        return false;
+    }
+    return true;
+}
